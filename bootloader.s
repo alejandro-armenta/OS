@@ -52,13 +52,13 @@ load_kernel_from_disk:
 
     ret
 
-kernel_load_error:
+    kernel_load_error:
 
-    mov si, load_error_string
+        mov si, load_error_string
 
-    call print_string
+        call print_string
 
-    jmp $
+        jmp $
 
 print_string:
 
@@ -105,12 +105,22 @@ print_string:
 
         ret
 
-
 title_string db 'the bootloader of Alex kernel',0
 
 message_string db 'the kernel is loading...',0
 
 load_error_string db 'the kernel cannot be loaded...',0
+
+;desde aqui hasta el inicio - 510 son de ceros
+times 510 - ($-$$) db 0
+
+;magic code
+dw 0xAA55
+
+
+
+
+
 
 
 

@@ -58,3 +58,41 @@ cmp al,5
 
 je the_value_equals_5
 
+4 gb vs 
+
+16 exabytes
+
+multitasking
+
+the kernel should be protected from current processes
+
+no kernel access
+
+the sensitive instructions and registers
+
+no process should intefere with another
+
+paging or segmentation memory protection
+
+privilege levels
+
+kernel mode and user mode
+
+0 kernel mode
+
+1 ?
+
+2 ?
+
+3 user mode
+
+current privilege level of the running code.
+
+the global descriptor table should be initialized and loaded first.
+
+video graphics array
+
+
+
+
+
