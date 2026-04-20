@@ -1,2 +1,60 @@
-32 bits 
-4 bytes 
+so bios is like a library for the bootloader
+
+video services category, disk services category
+
+
+interrupt number 10h == video library
+
+0x10
+
+0Eh
+
+interrupts are for calling 
+
+the register al is one of oEh parameters
+
+
+mov ah, 0Eh ;este es el servicio de video
+
+mov al, 'S'
+
+int 10h     ;bios video services
+
+
+#print the character S on the screen
+
+
+ale:
+
+    mov ah, 0Eh ;este es el servicio de video
+
+    mov al, 'S' ;print S
+
+    int 10h     ;bios video services
+
+
+print_character_S_with_BIOS:
+    mov ah, 0Eh
+    mov al, ’S’
+
+call_video_service:
+    int 10h
+
+print_character_S_with_BIOS:
+    mov ah, 0Eh
+    mov al, ’S’
+    jmp call_video_service
+
+print_character_A_with_BIOS:
+    mov ah, 0Eh
+    mov al, ’A’
+
+call_video_service:
+    int 10h
+
+main:
+
+cmp al,5
+
+je the_value_equals_5
+
