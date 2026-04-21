@@ -92,6 +92,11 @@ the global descriptor table should be initialized and loaded first.
 
 video graphics array
 
+the starter is in assembly 
+
+loads the GDT table, 
+
+set up the main kernel code in C
 
 
 

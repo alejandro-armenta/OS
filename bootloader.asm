@@ -15,9 +15,23 @@ start:
 
     call load_kernel_from_disk
 
+    ;aqui empieza a cargar todos los sectores 15
     jmp 0900h:0000
 
 load_kernel_from_disk:
+
+    mov ax, [curr_sec_to_load]
+
+    sub ax, 2
+
+    mov bx, 512d
+
+    mul bx
+
+    ;the content will be stored on memory address 0 offset
+    mov bx, ax
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     mov ax, 0900h
 
@@ -33,7 +47,7 @@ load_kernel_from_disk:
     mov ch, 0h
 
     ;second sector
-    mov cl, 02h
+    mov cl, [curr_sec_to_load]
 
     ;head number
     mov dh, 0h
@@ -41,14 +55,20 @@ load_kernel_from_disk:
     ;hard disk 0
     mov dl, 80h
 
-    ;the content will be stored on memory address 0 offset
-    mov bx, 0h
-
     ;provides services of hard disks
     int 13h
 
     ;jump if carry
     jc kernel_load_error
+
+    sub byte [number_of_sectors_to_load], 1
+
+    add byte [curr_sec_to_load], 1
+
+    ;el 0 ya no lo cuenta
+    cmp byte [number_of_sectors_to_load], 0
+
+    jne load_kernel_from_disk
 
     ret
 
@@ -110,6 +130,11 @@ title_string db 'the bootloader of Alex kernel',0
 message_string db 'the kernel is loading...',0
 
 load_error_string db 'the kernel cannot be loaded...',0
+
+number_of_sectors_to_load db 15d
+
+curr_sec_to_load db 02d
+
 
 ;desde aqui hasta el inicio - 510 son de ceros
 times 510 - ($-$$) db 0
