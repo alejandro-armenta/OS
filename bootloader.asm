@@ -18,6 +18,10 @@ start:
 
     ;aqui empieza a cargar todos los sectores 15
     ;aqui es el es
+
+    ;este es un far jump
+    ;cs changes to 0900 but ds not
+
     jmp 0900h:0000
 
 load_kernel_from_disk:
