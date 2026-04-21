@@ -1,5 +1,6 @@
 start:
-    
+
+    ;first place of our bootloader
     mov ax, 07C0h
     
     mov ds, ax
@@ -16,6 +17,7 @@ start:
     call load_kernel_from_disk
 
     ;aqui empieza a cargar todos los sectores 15
+    ;aqui es el es
     jmp 0900h:0000
 
 load_kernel_from_disk:
@@ -28,15 +30,16 @@ load_kernel_from_disk:
 
     mul bx
 
-    ;the content will be stored on memory address 0 offset
+    ;offset 00000
     mov bx, ax
-
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     mov ax, 0900h
 
-    ;here it is the address of the kernel and the offset 
+    ;move to data segment es
     mov es, ax
+
+    ;full memory address
+    ;es:bx
 
     mov ah, 02h ;reads sectors from the hard disk and loads them into memory
     
@@ -124,6 +127,10 @@ print_string:
         int 10h
 
         ret
+
+;este es un offset no un address completo
+;0:490
+;07C0h:490
 
 title_string db 'the bootloader of Alex kernel',0
 

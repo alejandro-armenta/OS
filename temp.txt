@@ -98,6 +98,37 @@ loads the GDT table,
 
 set up the main kernel code in C
 
+CS
+
+DS, ES, FS, GS
+each program can have up to 4 data segments
+
+SS
 
 
+2 16
+size of each segment is 64 KB
+
+segmentation
+
+segment + offset
+
+100:0d
+
+100:150d
+
+near jump same code segment
+
+far jump other code segment
+
+100
+
+900:1d
+
+far jump
+900 -> CS
+1d -> IP
+
+near jump
+1d -> IP
 
