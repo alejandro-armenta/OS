@@ -23,20 +23,25 @@ build: $(BOOTLOADER_FILE) $(INIT_KERNEL_FILE)
 	#this is the kernel in C
 	$(CC) $(KERNEL_FLAGS) $(KERNEL_FILES) $(KERNEL_OBJECT)
 
-	
+	ld -melf_i386 -Tlinker.ld starter.o kernel.elf -o alekernel.elf
 
-	#dd if=bootloader.o of=kernel.img
+	objcopy -O binary alekernel.elf alekernel.bin
 
-	#dd seek=1 conv=sync if=kernel.o of=kernel.img bs=512
+	dd if=bootloader.o of=kernel.img
 
-	#unset GTK_PATH
-	#unset GIO_MODULE_DIR
+	#this copies 5 sectors
+	dd seek=1 conv=sync if=alekernel.bin of=kernel.img bs=512 count=5
 
+	#initializes with zero padding 2046 sectors
+	dd seek=6 conv=sync if=/dev/zero of=kernel.img bs=512 count=2046
 
-	#qemu-system-x86_64 -s kernel.img
+	qemu-system-x86_64 -s kernel.img
 	
 
 clean:
 
 	rm -f *.o
-	rm kernel.img
+	rm -f *.img
+	rm -f *.elf
+	rm -f *.bin
+

@@ -22,6 +22,7 @@ start:
     call setup_interrupts
 
     ;far jump este es el segundo descriptor
+    ;este se guarda en cs
     call 08h:start_kernel
 
 setup_interrupts:
