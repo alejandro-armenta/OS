@@ -25,8 +25,69 @@ start:
     ;este se guarda en cs
     call 08h:start_kernel
 
+
+;se initializa con el primero y se escribe con el segundo
+
 setup_interrupts:
+
+    call remap_pic
+
+    call load_idt
+
     ret
+
+remap_pic:
+
+    ;inicializa el pic 
+    mov al, 11h
+
+    ;initializa el pic master
+    out 0x20, al
+
+    ;initializa el pic slave
+    out 0xa0, al
+
+
+    ;move to 32 and 40    
+    mov al, 32d
+
+    out 0x21, al
+
+    mov al, 40d
+
+    out 0xa1, al
+
+    ;tell master where slave it is connected 
+    mov al, 04h
+    
+    out 0x21, al
+
+    ;tell slave where it is connected 
+    mov al, 02h
+    
+    out 0xa1, al
+
+
+    ;architecture x86
+    mov al, 01h
+
+    out 0x21, al
+
+    out 0xa1, al
+
+    ;enable all irqs
+    mov al, 0h
+
+    out 0x21, al
+
+    out 0xa1, al
+
+    ret
+
+
+load_idt:
+    ret
+
 
 load_gdt:
     

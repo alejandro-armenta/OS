@@ -6,7 +6,26 @@
 //resolution 80 width
 
 //and 25 for the height
+/*
 
+programable interrupt controller
+
+master pic
+
+double fault and irq0
+
+send commands to 
+
+master PIC 20h 21h
+slave PIC a0h a1h
+
+write data on PIC so it can read it
+
+initialize PIC
+
+
+
+*/
 
 volatile unsigned char * video = 0xB8000;
 
@@ -16,20 +35,17 @@ int currLine = 0;
 
 
 void print(char*);
-void prinln();
+void println();
 void printi(int);
 
 void kernel_main()
 {
-    print("ana");
-    
-    prinln();
-    
-    print("alejandro");
-  
-    prinln();
-
-    printi(12345000);
+    print( "Welcome to 539kernel!" );
+    println();
+    print( "We are now in Protected-mode" );
+    println();
+    printi( 539 );
+    println();
 
     while(1);
 }
@@ -53,7 +69,7 @@ void print(char* str)
     }
 }
 
-void prinln()
+void println()
 {
     nextTextPos = ++currLine * 80;
 }
