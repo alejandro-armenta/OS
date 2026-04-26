@@ -40,7 +40,7 @@ void printi(int);
 
 void kernel_main()
 {
-    print( "Welcome to 539kernel!" );
+    print( "Welcome to alex kernel!" );
     println();
     print( "We are now in Protected-mode" );
     println();
@@ -48,6 +48,13 @@ void kernel_main()
     println();
 
     while(1);
+}
+
+void interrupt_handler(int interrupt_number)
+{
+    println();
+    print("Interrupt Received ");
+    printi(interrupt_number);
 }
 
 void print(char* str)

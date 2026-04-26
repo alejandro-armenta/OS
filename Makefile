@@ -8,6 +8,7 @@ INIT_KERNEL_FILE = starter.asm
 
 KERNEL_FILES = main.c
 
+#generate 32 bit code
 KERNEL_FLAGS = -Wall -m32 -c -ffreestanding -fno-asynchronous-unwind-tables -fno-pie
 
 KERNEL_OBJECT = -o kernel.elf
@@ -23,6 +24,7 @@ build: $(BOOTLOADER_FILE) $(INIT_KERNEL_FILE)
 	#this is the kernel in C
 	$(CC) $(KERNEL_FLAGS) $(KERNEL_FILES) $(KERNEL_OBJECT)
 
+	#starter goes before kernel
 	ld -melf_i386 -Tlinker.ld starter.o kernel.elf -o alekernel.elf
 
 	objcopy -O binary alekernel.elf alekernel.bin

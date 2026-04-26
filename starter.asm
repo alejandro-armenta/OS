@@ -2,6 +2,7 @@
 bits 16
 
 extern kernel_main
+extern interrupt_handler
 
 start:
     
@@ -36,7 +37,10 @@ setup_interrupts:
 
     ret
 
+
 remap_pic:
+
+    ;------------------------------------------;
 
     ;inicializa el pic 
     mov al, 11h
@@ -47,15 +51,19 @@ remap_pic:
     ;initializa el pic slave
     out 0xa0, al
 
+    ;------------------------------------------;
 
-    ;move to 32 and 40    
+    ;move to 32 in pic master
     mov al, 32d
 
     out 0x21, al
 
+    ;move to 40 in pic slave
     mov al, 40d
 
     out 0xa1, al
+
+    ;------------------------------------------;
 
     ;tell master where slave it is connected 
     mov al, 04h
@@ -67,6 +75,8 @@ remap_pic:
     
     out 0xa1, al
 
+    ;------------------------------------------;
+
 
     ;architecture x86
     mov al, 01h
@@ -75,6 +85,9 @@ remap_pic:
 
     out 0xa1, al
 
+    ;------------------------------------------;
+
+
     ;enable all irqs
     mov al, 0h
 
@@ -82,10 +95,15 @@ remap_pic:
 
     out 0xa1, al
 
+    ;------------------------------------------;
+
     ret
 
 
 load_idt:
+
+    lidt [idtr - start]
+
     ret
 
 
@@ -160,3 +178,4 @@ start_kernel:
 
 
 %include "gdt.asm"
+%include "idt.asm"
